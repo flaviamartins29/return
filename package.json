@@ -1,13 +1,13 @@
 {
-  "name": "Backend",
+  "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/flaviamartins29/return.git",
   "author": "flaviamartins29 <69690914+flaviamartins29@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
   },
   "dependencies": {
     "express": "^4.17.1",
