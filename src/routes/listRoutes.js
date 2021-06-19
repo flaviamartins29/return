@@ -1,9 +1,7 @@
 const { uuid } = require('uuidv4')
-const express = require('express');
-const { v4 } = require('uuid');
+const express = require('express')
 
 const router = express.Router()
-
 const lists = [] 
 
 router.get('/', (req, res) => {
@@ -20,7 +18,7 @@ router.post('/', (req, res) => {
   const { title } = req.body
 
   const list = {
-    id: v4(),
+    id: uuid(),
     title
   }
   lists.push(list)
