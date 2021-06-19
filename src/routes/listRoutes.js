@@ -36,6 +36,7 @@ router.post('/:listId/tasks', (req, res) =>{
     description,
     done,
   }
+
   const list = lists.find(list => list.id === listId)
   if(list === undefined) {
     return res.status(400).json({ erro: 'List not found.' })
@@ -45,6 +46,7 @@ router.post('/:listId/tasks', (req, res) =>{
   return res.json(list)
   
 })
+
 
 router.put('/:listId', (req, res) => {
   const { listId } = req.params
@@ -67,7 +69,8 @@ router.put('/:listId', (req, res) => {
 
 router.delete('/:listId', (req, res) => {
   const { listId } = req.params
-  const listIndex = lists.findIndex(list => list.id == listId)
+
+  const listIndex = lists.findIndex(list => list.id === listId)
 
   if (listIndex < 0) {
     return res.status(400).json({ error: 'List not found' })
@@ -76,6 +79,23 @@ router.delete('/:listId', (req, res) => {
   lists.splice(listIndex, 1)
 
   return res.status(204).send()
+})
+
+
+router.delete('/:listId/tasks/:taskId', (req, res) => {
+const { listId, taskId } = req.params
+
+const list = lists.find(list => list.id === listId)  
+const taskIndex = list.tasks.findIndex(task => task.taskId === taskId)
+
+  if(taskIndex === undefined) {
+    return res.status(400).json({ erro: 'List not found.' })
+  } 
+  
+  list.tasks.splice(taskIndex, 1)
+
+  return res.status(204).send()
+
 })
 
 module.exports = router
