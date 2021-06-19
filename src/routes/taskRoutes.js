@@ -1,5 +1,5 @@
-const { uuid } = require('uuidv4')
-const express = require('express')
+const express = require('express');
+const { v4 } = require('uuid');
 const router = express.Router()
 
 const tasks = []
@@ -17,8 +17,14 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const { description, done, listId } = req.body
 
+  const taskIndex = tasks.findIndex(task =>  task.listId === req.query.listId)
+
+  if (taskIndex < 0) {
+    return res.status(400).json({ error: 'Task not found' })
+  }
+ 
   const task = {
-    id: uuid(),
+    id: v4(),
     listId,
     description,
     done
@@ -40,8 +46,9 @@ router.put('/:id', (req, res) => {
 
   const task = {
     id,
+    listId,
     description,
-    done
+    done,  
   }
   tasks[taskIndex] = task
 
