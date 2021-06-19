@@ -1,36 +1,38 @@
+const { uuid } = require('uuidv4')
 const express = require('express')
 const router = express.Router()
 
-const toDoList = []
+const tasks = []
 
 router.get('/', (req, res) => {
-  const { description } = req.query
-
-  const results = description
-    ? toDoList.filter(task => task.description.includes(description))
-    : toDoList
+  const { listId } = req.query
+  
+  const results = listId
+    ? tasks.filter(task => task.listId.includes(listId))
+    : tasks
 
   return res.json(results);
 });
 
 router.post('/', (req, res) => {
-  const { description, done } = req.body
+  const { description, done, listId } = req.body
 
   const task = {
     id: uuid(),
+    listId,
     description,
     done
   }
-  toDoList.push(task)
+  tasks.push(task)
 
   return res.json(task)
 })
 
 router.put('/:id', (req, res) => {
   const { id } = req.params
-  const { description, done } = req.body
+  const { description, done, listId } = req.body
 
-  const taskIndex = toDoList.findIndex(task => task.id == id)
+  const taskIndex = tasks.findIndex(task => task.id == id && task.listId == listId)
 
   if (taskIndex < 0) {
     return res.status(400).json({ error: 'Task not found' })
@@ -41,20 +43,20 @@ router.put('/:id', (req, res) => {
     description,
     done
   }
-  toDoList[taskIndex] = task
+  tasks[taskIndex] = task
 
   return res.json(task)
 })
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params
-  const taskIndex = toDoList.findIndex(task => task.id == id)
+  const taskIndex = tasks.findIndex(task => task.id == id)
 
   if (taskIndex < 0) {
     return res.status(400).json({ error: 'Task not found' })
   }
 
-  toDoList.splice(taskIndex, 1)
+  tasks.splice(taskIndex, 1)
 
   return res.status(204).send()
 })
