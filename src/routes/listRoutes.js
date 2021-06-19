@@ -19,25 +19,45 @@ router.post('/', (req, res) => {
 
   const list = {
     id: uuid(),
-    title
+    title,
+    tasks: []
   }
   lists.push(list)
 
   return res.json(list)
 })
 
-router.put('/:id', (req, res) => {
-  const { id } = req.params
+router.post('/:listId/tasks', (req, res) =>{
+  const { listId } = req.params
+  const { description, done } = req.body 
+
+  const task = {
+    taskId: uuid(), 
+    description,
+    done,
+  }
+  const list = lists.find(list => list.id === listId)
+  if(list === undefined) {
+    return res.status(400).json({ erro: 'List not found.' })
+  }
+  list.tasks.push(task)
+  
+  return res.json(list)
+  
+})
+
+router.put('/:listId', (req, res) => {
+  const { listId } = req.params
   const { title } = req.body
 
-  const listIndex = lists.findIndex(list => list.id == id)
+  const listIndex = lists.findIndex(list => list.id == listId)
 
   if (listIndex < 0) {
     return res.status(400).json({ error: 'List not found' })
   }
 
   const list = {
-    id,
+    id: listId,
     title
   }
   lists[listIndex] = list
@@ -45,9 +65,9 @@ router.put('/:id', (req, res) => {
   return res.json(list)
 })
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params
-  const listIndex = lists.findIndex(list => list.id == id)
+router.delete('/:listId', (req, res) => {
+  const { listId } = req.params
+  const listIndex = lists.findIndex(list => list.id == listId)
 
   if (listIndex < 0) {
     return res.status(400).json({ error: 'List not found' })
