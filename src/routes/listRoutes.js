@@ -71,10 +71,13 @@ router.put('/:listId/tasks/:taskId', (req, res) => {
   const { description, done } = req.body
 
   const list = lists.find(list => list.id === listId)  
-  const taskFind = list.tasks.findIndex(task => task.taskId === taskId)
-
-  if (taskFind > 0) {
+  if (list === undefined) {
     return res.status(400).json({ error: 'List not found' })
+  }
+
+  const taskFind = list.tasks.findIndex(task => task.taskId === taskId)
+  if (taskFind < 0){
+    return res.status(400).json({ error: 'Task not found' })
   }
 
   const task = {
@@ -82,7 +85,7 @@ router.put('/:listId/tasks/:taskId', (req, res) => {
     description,
     done
   }
-  lists[taskFind] = task
+  list.tasks[taskFind] = task
 
   return res.json(task)
 })
