@@ -109,9 +109,9 @@ router.delete('/:listId/tasks/:taskId', (req, res) => {
 const { listId, taskId } = req.params
 
 const list = lists.find(list => list.id === listId)  
-const task = list.tasks.find(task => task.taskId === taskId)
+const task = list.tasks.findIndex(task => task.taskId === taskId)
 
-  if(task === undefined) {
+  if(task < 0) {
     return res.status(400).json({ erro: 'List not found.' })
   } 
   
