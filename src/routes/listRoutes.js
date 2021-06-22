@@ -15,13 +15,20 @@ router.get('/', (req, res) => {
   return res.json(results);
 });
 
+router.get('/home', (req, res) =>{
+  
+const title = lists.map(list => list.title)
+
+return res.json(title)
+})
+
 router.post('/', (req, res) => {
   const { title } = req.body
 
   const list = {
     id: uuid(),
     title,
-    tasks: []
+    tasks: [].slice()
   }
   lists.push(list)
 
