@@ -1,6 +1,6 @@
-
 const { uuid } = require('uuidv4')
 const express = require('express')
+
 
 const router = express.Router()
 const lists = [] 
@@ -15,11 +15,10 @@ router.get('/', (req, res) => {
   return res.json(results);
 });
 
-router.get('/home', (req, res) =>{
-  
-const title = lists.map(list => list.title)
+router.get('/home', (req, res) => {
+  const titles = lists.map(list => list.title)
 
-return res.json(title)
+  return res.render('home', { titles })
 })
 
 router.post('/', (req, res) => {
@@ -28,7 +27,7 @@ router.post('/', (req, res) => {
   const list = {
     id: uuid(),
     title,
-    tasks: [].slice()
+    tasks: []
   }
   lists.push(list)
 

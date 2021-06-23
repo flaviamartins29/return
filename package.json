@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "pug": "^3.0.2",
     "uuidv4": "^6.2.10"
   },
   "devDependencies": {
