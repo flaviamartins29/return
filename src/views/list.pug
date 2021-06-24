@@ -8,5 +8,5 @@ html
             p.lead Estas são suas tarefas
             ul
                 each task in list.tasks
-                    li= task.description  
-                    
+                    li= task.description
+                        input(type="checkbox", id=task.done, name=task.done, value=task.done)

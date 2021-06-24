@@ -12,11 +12,11 @@ router.get('/', (req, res) => {
     ? lists.filter(list => list.title.includes(title))
     : lists
 
-  return res.json( results);
+  return res.json( results );
 })
 
 router.get('/home', (req, res) => {
-  const titles = lists.map(list => ({title: list.title, id: list.id}))
+  const titles = lists.map(list => ({title: list.title, id: list.id, done: list.done}))
 
   return res.render('home', { titles })
 })
@@ -104,7 +104,7 @@ router.put('/:listId/tasks/:taskId', (req, res) => {
   }
   list.tasks[taskFind] = task
 
-  return res.json(task)
+  return res.render('editStatus', { task })
 })
 
 

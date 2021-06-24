@@ -9,8 +9,5 @@ html
                 | Check Lists
             p.lead Estas são suas listas
             ul
-                each title in titles
-                    li
-                        a(href= '/lists/'+ title.id)= title.title 
-                            
-                            
+                each task in list.tasks
+                    input(type="checkbox", id=tasks.done, name=tasks.done, value=tasks.done, checked= true)
