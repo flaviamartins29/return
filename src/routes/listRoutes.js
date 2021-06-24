@@ -12,13 +12,23 @@ router.get('/', (req, res) => {
     ? lists.filter(list => list.title.includes(title))
     : lists
 
-  return res.json(results);
-});
+  return res.json( results);
+})
 
 router.get('/home', (req, res) => {
-  const titles = lists.map(list => list.title)
+  const titles = lists.map(list => ({title: list.title, id: list.id}))
 
   return res.render('home', { titles })
+})
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params
+  const list = lists.find(list => list.id === id)
+
+  if (list === undefined ){
+    return res.status(400).json({ erro: 'List not found.' })
+  }
+  return res.render('list', { list })
 })
 
 router.post('/', (req, res) => {
@@ -58,7 +68,7 @@ router.put('/:listId', (req, res) => {
   const { listId } = req.params
   const { title } = req.body
 
-  const listIndex = lists.findIndex(list => list.id == listId)
+  const listIndex = lists.findIndex(list => list.id === listId)
 
   if (listIndex < 0) {
     return res.status(400).json({ error: 'List not found' })
