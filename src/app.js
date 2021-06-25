@@ -7,6 +7,7 @@ const app = express();
 app.set('view engine', 'pug')
 app.set('views', __dirname + '/views')
 app.use(express.json())
+app.use(express.urlencoded())
 app.use('/lists', listRoutes)
 
 app.listen(port, () => {

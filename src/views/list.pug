@@ -7,6 +7,8 @@ html
             h1= list.title
             p.lead Estas são suas tarefas
             ul
-                each task in list.tasks
-                    li= task.description
-                        input(type="checkbox", id=task.done, name=task.done, value=task.done)
+                each task, index in list.tasks
+                    li 
+                        input(type="checkbox", id="task" + index, checked=task.done)
+                        label(for="task" + index) 
+                            |  #{task.description}

@@ -11,6 +11,9 @@ html
             ul
                 each title in titles
                     li
-                        a(href= '/lists/'+ title.id)= title.title 
-                            
-                            
+                        a(href= '/lists/'+ title.id)= title.title
+            form(action="/lists", method="POST")
+                .input-group
+                    input.form-control(placeholder= "Digite o nome da sua lista", name="title", required= true)
+                    button.btn.btn-primary.btn-sm(type="submit")
+                        | Salvar
