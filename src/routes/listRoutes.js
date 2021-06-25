@@ -60,7 +60,7 @@ router.post('/:listId/tasks', (req, res) =>{
   }
   list.tasks.push(task)
   
-  return res.json(list)
+  return res.redirect("/lists/" + listId)
   
 })
 
