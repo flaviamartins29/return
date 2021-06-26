@@ -104,7 +104,7 @@ router.put('/:listId/tasks/:taskId', (req, res) => {
   }
   list.tasks[taskFind] = task
 
-  return res.render('editStatus', { task })
+  return res.redirect("/lists/" + listId )
 })
 
 
