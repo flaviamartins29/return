@@ -9,13 +9,13 @@ html
             ul
                 each task, index in list.tasks
                     li 
-                        input(type="checkbox", id="task" + index, checked=task.done)
-                        label(for="task" + index) 
-                            | #{task.description}
-                form(action="/lists/" + list.id + "/tasks/" + taskId, method="PUT", name="teste")
-                    label(for= taskId + index)
-                        button.btn.btn-primary.btn-sm(type="submit")
-                            | Salvar
+                    form(action="/lists/" + list.id + "/tasks/" + task.taskId, method="PUT")
+                        label(for= task.taskId)
+                            button.btn.btn-primary.btn-sm(type="submit")
+                                | Salvar
+                            input(type="checkbox", id="task" + index, checked=task.done)
+                            label(for="task" + index) 
+                                | #{task.description}
             form(action="/lists/" + list.id + "/tasks" , method="POST")
                 .input-group
                     input.form-control(placeholder= "Digite sua tarefa", name="description", required= true)
